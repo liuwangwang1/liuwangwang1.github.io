@@ -192,7 +192,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-09-13 05:36:34" itemprop="dateModified" datetime="2021-09-13T05:36:34Z">2021-09-13</time>
+        <time title="Modified: 2021-09-13 06:50:42" itemprop="dateModified" datetime="2021-09-13T06:50:42Z">2021-09-13</time>
       </span>
 
   
@@ -206,25 +206,14 @@
     
     <div class="post-body" itemprop="articleBody">
           <h4 id="简单动态字符串-SDS"><a href="#简单动态字符串-SDS" class="headerlink" title="简单动态字符串 SDS"></a>简单动态字符串 SDS</h4><p>遵循了C字符串以空字符结尾的管理，保存了空字符的1字节空间不计算在SDS的len属性中，并且为空字符分配额外的1字节空间，以及添加空字符到字符串末尾等操作，这样做的好处是<code>SDS</code>可以直接重用一部分C字符串函数库里面的函数</p>
-<h4 id="SDS的优点"><a href="#SDS的优点" class="headerlink" title="SDS的优点"></a>SDS的优点</h4><h5 id="获取字符串长度"><a href="#获取字符串长度" class="headerlink" title="获取字符串长度"></a>获取字符串长度</h5><ul>
-<li>C字符串想要获取一个字符串的长度需要遍历整个字符串获取len信息，这个时间复杂度是O(n)</li>
-<li>SDS字符串在字符串头部维护了一些属性，其中的len属性可以使用户已O(1)的复杂度获取整个字符串的len属性，这样确保了获取字符串长度的工作不会成为Redis的瓶颈<h5 id="杜绝缓冲区溢出"><a href="#杜绝缓冲区溢出" class="headerlink" title="杜绝缓冲区溢出"></a>杜绝缓冲区溢出</h5></li>
-<li>C字符串不会维护自身的长度，假设为字符串分配的内存不够用时，这是继续添加字符串信息，就会造成缓冲区溢出</li>
-<li>SDS字符串的空间分配策略可以完全杜绝发生缓冲区溢出的可能性。<h6 id="空间预分配"><a href="#空间预分配" class="headerlink" title="空间预分配"></a>空间预分配</h6></li>
-<li>空间预分配用于优化SDS的字符串增长操作：当SDS的API对一个SDS进行修改，并且需要对SDS进行空间扩展的时候，程序不仅会为SDS分配修改所必须要的空间，还会为SDS分配额外的未使用空间。</li>
-<li>通过空间预分配策略，Redis可以减少连续执行字符串增长操作所需的内存重分配次数<h6 id="惰性释放"><a href="#惰性释放" class="headerlink" title="惰性释放"></a>惰性释放</h6></li>
-<li>惰性空间释放用于优化SDS的字符串缩短操作：当SDS的API需要缩短SDS保存的字符串时，程序并不立即使用内存重分配来回收缩短后多出来的字节，而是使用free属性将这些字节的数量记录起来，并等待将来使用。</li>
-<li>通过惰性空间释放策略，SDS避免了缩短字符串时所需的内存重分配操作，并为将来可能有的增长操作提供了优化。</li>
-</ul>
-<h5 id="二进制安全"><a href="#二进制安全" class="headerlink" title="二进制安全"></a>二进制安全</h5><blockquote>
-<p>通过使用二进制安全的SDS，而不是C字符串，使得Redis不仅可以保存文本数据，还可以保存任意格式的二进制数据。</p>
-</blockquote>
-<ul>
-<li>C字符串中的字符必须符合某种编码（比如ASCII），并且除了字符串的末尾之外，字符串里面不能包含空字符，否则最先被程序读入的空字符将被误认为是字符串结尾，这些限制使得C字符串只能保存文本数据，而不能保存像图片、音频、视频、压缩文件这样的二进制数据。</li>
-<li>为了确保Redis可以适用于各种不同的使用场景，SDS的API都是二进制安全的（binary-safe），所有SDSAPI都会以处理二进制的方式来处理SDS存放在buf数组里的数据，程序不会对其中的数据做任何限制、过滤、或者假设，数据在写入时是什么样的，它被读取时就是什么样。</li>
-</ul>
-<h5 id="兼容部分C字符串函数"><a href="#兼容部分C字符串函数" class="headerlink" title="兼容部分C字符串函数"></a>兼容部分C字符串函数</h5><p>通过遵循C字符串以空字符结尾的惯例，SDS可以在有需要时重用＜string.h＞函数库，从而避免了不必要的代码重复。</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/13/Redis%E7%AE%80%E5%8D%95%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 

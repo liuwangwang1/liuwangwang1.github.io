@@ -20,15 +20,15 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="简单动态字符串 SDS遵循了C字符串以空字符结尾的管理，保存了空字符的1字节空间不计算在SDS的len属性中，并且为空字符分配额外的1字节空间，以及添加空字符到字符串末尾等操作，这样做的好处是SDS可以直接重用一部分C字符串函数库里面的函数 SDS的优点获取字符串长度 C字符串想要获取一个字符串的长度需要遍历整个字符串获取len信息，这个时间复杂度是O(n) SDS字符串在字符串头部维护了一些属性">
+<meta name="description" content="简单动态字符串 SDS遵循了C字符串以空字符结尾的管理，保存了空字符的1字节空间不计算在SDS的len属性中，并且为空字符分配额外的1字节空间，以及添加空字符到字符串末尾等操作，这样做的好处是SDS可以直接重用一部分C字符串函数库里面的函数">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redis简单动态字符串">
 <meta property="og:url" content="http://example.com/2021/09/13/Redis%E7%AE%80%E5%8D%95%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/index.html">
 <meta property="og:site_name" content="Albert Blog">
-<meta property="og:description" content="简单动态字符串 SDS遵循了C字符串以空字符结尾的管理，保存了空字符的1字节空间不计算在SDS的len属性中，并且为空字符分配额外的1字节空间，以及添加空字符到字符串末尾等操作，这样做的好处是SDS可以直接重用一部分C字符串函数库里面的函数 SDS的优点获取字符串长度 C字符串想要获取一个字符串的长度需要遍历整个字符串获取len信息，这个时间复杂度是O(n) SDS字符串在字符串头部维护了一些属性">
+<meta property="og:description" content="简单动态字符串 SDS遵循了C字符串以空字符结尾的管理，保存了空字符的1字节空间不计算在SDS的len属性中，并且为空字符分配额外的1字节空间，以及添加空字符到字符串末尾等操作，这样做的好处是SDS可以直接重用一部分C字符串函数库里面的函数">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-09-12T23:41:33.000Z">
-<meta property="article:modified_time" content="2021-09-13T05:36:34.997Z">
+<meta property="article:modified_time" content="2021-09-13T06:50:42.483Z">
 <meta property="article:author" content="Albert">
 <meta property="article:tag" content="Redis设计与实现摘抄">
 <meta name="twitter:card" content="summary">
@@ -199,7 +199,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-09-13 05:36:34" itemprop="dateModified" datetime="2021-09-13T05:36:34Z">2021-09-13</time>
+        <time title="Modified: 2021-09-13 06:50:42" itemprop="dateModified" datetime="2021-09-13T06:50:42Z">2021-09-13</time>
       </span>
 
   
@@ -213,8 +213,8 @@
     
     <div class="post-body" itemprop="articleBody">
         <h4 id="简单动态字符串-SDS"><a href="#简单动态字符串-SDS" class="headerlink" title="简单动态字符串 SDS"></a>简单动态字符串 SDS</h4><p>遵循了C字符串以空字符结尾的管理，保存了空字符的1字节空间不计算在SDS的len属性中，并且为空字符分配额外的1字节空间，以及添加空字符到字符串末尾等操作，这样做的好处是<code>SDS</code>可以直接重用一部分C字符串函数库里面的函数</p>
+<span id="more"></span>
 <h4 id="SDS的优点"><a href="#SDS的优点" class="headerlink" title="SDS的优点"></a>SDS的优点</h4><h5 id="获取字符串长度"><a href="#获取字符串长度" class="headerlink" title="获取字符串长度"></a>获取字符串长度</h5><ul>
-<li>C字符串想要获取一个字符串的长度需要遍历整个字符串获取len信息，这个时间复杂度是O(n)</li>
 <li>SDS字符串在字符串头部维护了一些属性，其中的len属性可以使用户已O(1)的复杂度获取整个字符串的len属性，这样确保了获取字符串长度的工作不会成为Redis的瓶颈<h5 id="杜绝缓冲区溢出"><a href="#杜绝缓冲区溢出" class="headerlink" title="杜绝缓冲区溢出"></a>杜绝缓冲区溢出</h5></li>
 <li>C字符串不会维护自身的长度，假设为字符串分配的内存不够用时，这是继续添加字符串信息，就会造成缓冲区溢出</li>
 <li>SDS字符串的空间分配策略可以完全杜绝发生缓冲区溢出的可能性。<h6 id="空间预分配"><a href="#空间预分配" class="headerlink" title="空间预分配"></a>空间预分配</h6></li>
