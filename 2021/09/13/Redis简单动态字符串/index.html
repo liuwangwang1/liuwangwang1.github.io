@@ -23,22 +23,22 @@
 <meta name="description" content="简单动态字符串 SDS遵循了C字符串以空字符结尾的管理，保存了空字符的1字节空间不计算在SDS的len属性中，并且为空字符分配额外的1字节空间，以及添加空字符到字符串末尾等操作，这样做的好处是SDS可以直接重用一部分C字符串函数库里面的函数 SDS的优点获取字符串长度 C字符串想要获取一个字符串的长度需要遍历整个字符串获取len信息，这个时间复杂度是O(n) SDS字符串在字符串头部维护了一些属性">
 <meta property="og:type" content="article">
 <meta property="og:title" content="进击的小垃圾">
-<meta property="og:url" content="http://example.com/2021/09/13/%E8%BF%9B%E5%87%BB%E7%9A%84%E5%B0%8F%E5%9E%83%E5%9C%BE/index.html">
+<meta property="og:url" content="http://example.com/2021/09/13/Redis%E7%AE%80%E5%8D%95%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/index.html">
 <meta property="og:site_name" content="Albert Blog">
 <meta property="og:description" content="简单动态字符串 SDS遵循了C字符串以空字符结尾的管理，保存了空字符的1字节空间不计算在SDS的len属性中，并且为空字符分配额外的1字节空间，以及添加空字符到字符串末尾等操作，这样做的好处是SDS可以直接重用一部分C字符串函数库里面的函数 SDS的优点获取字符串长度 C字符串想要获取一个字符串的长度需要遍历整个字符串获取len信息，这个时间复杂度是O(n) SDS字符串在字符串头部维护了一些属性">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-09-12T23:41:33.000Z">
-<meta property="article:modified_time" content="2021-09-12T16:23:51.266Z">
+<meta property="article:modified_time" content="2021-09-13T02:55:19.762Z">
 <meta property="article:author" content="Albert">
 <meta property="article:tag" content="Redis设计与实现摘抄">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2021/09/13/%E8%BF%9B%E5%87%BB%E7%9A%84%E5%B0%8F%E5%9E%83%E5%9C%BE/">
+<link rel="canonical" href="http://example.com/2021/09/13/Redis%E7%AE%80%E5%8D%95%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/09/13/%E8%BF%9B%E5%87%BB%E7%9A%84%E5%B0%8F%E5%9E%83%E5%9C%BE/","path":"2021/09/13/进击的小垃圾/","title":"进击的小垃圾"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/09/13/Redis%E7%AE%80%E5%8D%95%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/","path":"2021/09/13/Redis简单动态字符串/","title":"进击的小垃圾"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>进击的小垃圾 | Albert Blog</title>
@@ -168,7 +168,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/13/%E8%BF%9B%E5%87%BB%E7%9A%84%E5%B0%8F%E5%9E%83%E5%9C%BE/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/13/Redis%E7%AE%80%E5%8D%95%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -191,10 +191,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2021-09-12 23:41:33 / Modified: 16:23:51" itemprop="dateCreated datePublished" datetime="2021-09-12T23:41:33Z">2021-09-12</time>
+      <time title="Created: 2021-09-12 23:41:33" itemprop="dateCreated datePublished" datetime="2021-09-12T23:41:33Z">2021-09-12</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-09-13 02:55:19" itemprop="dateModified" datetime="2021-09-13T02:55:19Z">2021-09-13</time>
+      </span>
 
   
 </div>
