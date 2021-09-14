@@ -28,7 +28,7 @@
 <meta property="og:description" content="表和索引相关文件每个小于1GB的表或索引都在对应的数据库目录中存储为单个文件。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-09-14T15:51:26.000Z">
-<meta property="article:modified_time" content="2021-09-14T10:31:39.714Z">
+<meta property="article:modified_time" content="2021-09-14T10:34:27.642Z">
 <meta property="article:author" content="Albert">
 <meta property="article:tag" content="PostgreSQL学习">
 <meta name="twitter:card" content="summary">
@@ -191,7 +191,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2021-09-14 15:51:26 / 修改时间：10:31:39" itemprop="dateCreated datePublished" datetime="2021-09-14T15:51:26Z">2021-09-14</time>
+      <time title="创建时间：2021-09-14 15:51:26 / 修改时间：10:34:27" itemprop="dateCreated datePublished" datetime="2021-09-14T15:51:26Z">2021-09-14</time>
     </span>
 
   
@@ -221,7 +221,14 @@
 <h4 id="堆表文件的内部布局"><a href="#堆表文件的内部布局" class="headerlink" title="堆表文件的内部布局"></a>堆表文件的内部布局</h4><p>数据文件(堆表、索引，也包括空闲空间映射和可见性映射)内部被划分为固定长度的页，或者叫区块，大小默认为8192B(8KB).每个文件中的页从0开始按顺序编号，这些数字成为区块号。如果文件已填满，PG就通过在文件末尾追加一个新的空页来增加文件长度。</p>
 <h5 id="表页面的三种数据类型"><a href="#表页面的三种数据类型" class="headerlink" title="表页面的三种数据类型"></a>表页面的三种数据类型</h5><h6 id="堆元组"><a href="#堆元组" class="headerlink" title="堆元组"></a>堆元组</h6><p>即数据记录本身。他们从页面底部开始依序堆叠。</p>
 <h6 id="行指针-项目指针"><a href="#行指针-项目指针" class="headerlink" title="行指针(项目指针)"></a>行指针(项目指针)</h6><p>每个指针占4B，保存着指向堆元组的指针。<br>行指针形成一个简单的数组，扮演了元组索引的角色。每个索引项从1开始一次编号，称为<code>偏移号</code>。当向页面中添加新元组时，一个响应的新行指针也会被放入数组中，并指向新添加的元组。</p>
-<h6 id="首部数据"><a href="#首部数据" class="headerlink" title="首部数据"></a>首部数据</h6><p>页面的起始位置分配了由结构<code>PageHeaderData</code>定义的首部数据。它的大小为24B，包含关于页面的元数据。<br><code>    pd_lsn: 本页面最近一次变更所写入的XLOG记录对应的LSN。它是一个8B无符号整数，与WAL机制相关     pd_checkum: 本页面的校验和值     pd_lower: 指向行指针的末尾     pd_upper: 指向最新堆元组的起始位置     pd_special: 在索引页中会用到该字段，在堆尾页中它指向页尾；在索引页中它指向特殊空间的起始位置，特殊空间是仅由索引使用的特殊数据区域，包含特定的数据，具体内容依索引的类型而定，比如B树，Gist(这是啥？)Gin等等</code></p>
+<h6 id="首部数据"><a href="#首部数据" class="headerlink" title="首部数据"></a>首部数据</h6><p>页面的起始位置分配了由结构<code>PageHeaderData</code>定义的首部数据。它的大小为24B，包含关于页面的元数据。</p>
+<ul>
+<li>pd_lsn: 本页面最近一次变更所写入的XLOG记录对应的LSN。它是一个8B无符号整数，与WAL机制相关</li>
+<li>pd_checkum: 本页面的校验和值</li>
+<li>pd_lower: 指向行指针的末尾</li>
+<li>pd_upper: 指向最新堆元组的起始位置</li>
+<li>pd_special: 在索引页中会用到该字段，在堆尾页中它指向页尾；在索引页中它指向特殊空间的起始位置，特殊空间是仅由索引使用的特殊数据区域，包含特定的数据，具体内容依索引的类型而定，比如B树，Gist(这是啥？)Gin等等</li>
+</ul>
 
     </div>
 
