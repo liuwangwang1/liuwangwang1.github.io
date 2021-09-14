@@ -28,7 +28,7 @@
 <meta property="og:description" content="表和索引相关文件每个小于1GB的表或索引都在对应的数据库目录中存储为单个文件。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-09-14T15:51:26.000Z">
-<meta property="article:modified_time" content="2021-09-14T08:06:48.338Z">
+<meta property="article:modified_time" content="2021-09-14T10:30:48.160Z">
 <meta property="article:author" content="Albert">
 <meta property="article:tag" content="PostgreSQL学习">
 <meta name="twitter:card" content="summary">
@@ -109,7 +109,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A1%A8%E5%92%8C%E7%B4%A2%E5%BC%95%E7%9B%B8%E5%85%B3%E6%96%87%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">表和索引相关文件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%AF%8F%E4%B8%AA%E5%B0%8F%E4%BA%8E1GB%E7%9A%84%E8%A1%A8%E6%88%96%E7%B4%A2%E5%BC%95%E9%83%BD%E5%9C%A8%E5%AF%B9%E5%BA%94%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%AE%E5%BD%95%E4%B8%AD%E5%AD%98%E5%82%A8%E4%B8%BA%E5%8D%95%E4%B8%AA%E6%96%87%E4%BB%B6%E3%80%82"><span class="nav-number">1.1.</span> <span class="nav-text">每个小于1GB的表或索引都在对应的数据库目录中存储为单个文件。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BD%93%E8%A1%A8%E5%92%8C%E7%B4%A2%E5%BC%95%E7%9A%84%E6%96%87%E4%BB%B6%E8%B6%85%E8%BF%871GB%E6%97%B6%EF%BC%8CPG%E4%BC%9A%E5%88%9B%E5%BB%BA%E5%B9%B6%E4%BD%BF%E7%94%A8%E4%B8%80%E4%B8%AA%E5%90%8D%E4%B8%BArelfilenode-1%E7%9A%84%E6%96%B0%E6%96%87%E4%BB%B6%E3%80%82%E5%A6%82%E6%9E%9C%E6%AD%A4%E6%97%B6%E6%96%B0%E6%96%87%E4%BB%B6%E4%B9%9F%E5%A1%AB%E6%BB%A1%E4%BA%86%EF%BC%8C%E5%88%99%E4%BC%9A%E7%BB%A7%E7%BB%AD%E5%88%9B%E5%BB%BA%E4%B8%8B%E4%B8%80%E4%B8%AA%E5%90%8D%E4%B8%BArelfilenode-2%E7%9A%84%E6%96%B0%E6%96%87%E4%BB%B6%EF%BC%8C%E5%B9%B6%E4%BB%A5%E6%AD%A4%E7%B1%BB%E6%8E%A8"><span class="nav-number">1.2.</span> <span class="nav-text">当表和索引的文件超过1GB时，PG会创建并使用一个名为relfilenode.1的新文件。如果此时新文件也填满了，则会继续创建下一个名为relfilenode.2的新文件，并以此类推</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A1%A8%E5%92%8C%E7%B4%A2%E5%BC%95%E7%9B%B8%E5%85%B3%E6%96%87%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">表和索引相关文件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%AF%8F%E4%B8%AA%E5%B0%8F%E4%BA%8E1GB%E7%9A%84%E8%A1%A8%E6%88%96%E7%B4%A2%E5%BC%95%E9%83%BD%E5%9C%A8%E5%AF%B9%E5%BA%94%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%AE%E5%BD%95%E4%B8%AD%E5%AD%98%E5%82%A8%E4%B8%BA%E5%8D%95%E4%B8%AA%E6%96%87%E4%BB%B6%E3%80%82"><span class="nav-number">1.1.</span> <span class="nav-text">每个小于1GB的表或索引都在对应的数据库目录中存储为单个文件。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BD%93%E8%A1%A8%E5%92%8C%E7%B4%A2%E5%BC%95%E7%9A%84%E6%96%87%E4%BB%B6%E8%B6%85%E8%BF%871GB%E6%97%B6%EF%BC%8CPG%E4%BC%9A%E5%88%9B%E5%BB%BA%E5%B9%B6%E4%BD%BF%E7%94%A8%E4%B8%80%E4%B8%AA%E5%90%8D%E4%B8%BArelfilenode-1%E7%9A%84%E6%96%B0%E6%96%87%E4%BB%B6%E3%80%82%E5%A6%82%E6%9E%9C%E6%AD%A4%E6%97%B6%E6%96%B0%E6%96%87%E4%BB%B6%E4%B9%9F%E5%A1%AB%E6%BB%A1%E4%BA%86%EF%BC%8C%E5%88%99%E4%BC%9A%E7%BB%A7%E7%BB%AD%E5%88%9B%E5%BB%BA%E4%B8%8B%E4%B8%80%E4%B8%AA%E5%90%8D%E4%B8%BArelfilenode-2%E7%9A%84%E6%96%B0%E6%96%87%E4%BB%B6%EF%BC%8C%E5%B9%B6%E4%BB%A5%E6%AD%A4%E7%B1%BB%E6%8E%A8"><span class="nav-number">1.2.</span> <span class="nav-text">当表和索引的文件超过1GB时，PG会创建并使用一个名为relfilenode.1的新文件。如果此时新文件也填满了，则会继续创建下一个名为relfilenode.2的新文件，并以此类推</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A1%A8%E7%A9%BA%E9%97%B4%E7%9A%84%E5%B8%83%E5%B1%80"><span class="nav-number">2.</span> <span class="nav-text">表空间的布局</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A0%86%E8%A1%A8%E6%96%87%E4%BB%B6%E7%9A%84%E5%86%85%E9%83%A8%E5%B8%83%E5%B1%80"><span class="nav-number">3.</span> <span class="nav-text">堆表文件的内部布局</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%A1%A8%E9%A1%B5%E9%9D%A2%E7%9A%84%E4%B8%89%E7%A7%8D%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.1.</span> <span class="nav-text">表页面的三种数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%A0%86%E5%85%83%E7%BB%84"><span class="nav-number">3.1.1.</span> <span class="nav-text">堆元组</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%A1%8C%E6%8C%87%E9%92%88-%E9%A1%B9%E7%9B%AE%E6%8C%87%E9%92%88"><span class="nav-number">3.1.2.</span> <span class="nav-text">行指针(项目指针)</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%A6%96%E9%83%A8%E6%95%B0%E6%8D%AE"><span class="nav-number">3.1.3.</span> <span class="nav-text">首部数据</span></a></li></ol></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -191,7 +191,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2021-09-14 15:51:26 / 修改时间：08:06:48" itemprop="dateCreated datePublished" datetime="2021-09-14T15:51:26Z">2021-09-14</time>
+      <time title="创建时间：2021-09-14 15:51:26 / 修改时间：10:30:48" itemprop="dateCreated datePublished" datetime="2021-09-14T15:51:26Z">2021-09-14</time>
     </span>
 
   
@@ -207,7 +207,22 @@
         <h4 id="表和索引相关文件"><a href="#表和索引相关文件" class="headerlink" title="表和索引相关文件"></a>表和索引相关文件</h4><h5 id="每个小于1GB的表或索引都在对应的数据库目录中存储为单个文件。"><a href="#每个小于1GB的表或索引都在对应的数据库目录中存储为单个文件。" class="headerlink" title="每个小于1GB的表或索引都在对应的数据库目录中存储为单个文件。"></a>每个小于1GB的表或索引都在对应的数据库目录中存储为单个文件。</h5><span id="more"></span>
 
 <p>在数据库内部，表和索引作为数据库对象是通过oid来管理的，而这些数据文件由变量<code>relfilenode</code>管理。表和索引的<code>relfilenode</code>通常与<code>oid</code>一致，但也会有例外，比如对表执行了<code>TRUNCATE</code>命令，PG会为表分配一个新的<code>relfilenode</code>，删除旧的数据文件，创建一个新的数据文件。</p>
-<h5 id="当表和索引的文件超过1GB时，PG会创建并使用一个名为relfilenode-1的新文件。如果此时新文件也填满了，则会继续创建下一个名为relfilenode-2的新文件，并以此类推"><a href="#当表和索引的文件超过1GB时，PG会创建并使用一个名为relfilenode-1的新文件。如果此时新文件也填满了，则会继续创建下一个名为relfilenode-2的新文件，并以此类推" class="headerlink" title="当表和索引的文件超过1GB时，PG会创建并使用一个名为relfilenode.1的新文件。如果此时新文件也填满了，则会继续创建下一个名为relfilenode.2的新文件，并以此类推"></a>当表和索引的文件超过1GB时，PG会创建并使用一个名为<code>relfilenode.1</code>的新文件。如果此时新文件也填满了，则会继续创建下一个名为<code>relfilenode.2</code>的新文件，并以此类推</h5>
+<h5 id="当表和索引的文件超过1GB时，PG会创建并使用一个名为relfilenode-1的新文件。如果此时新文件也填满了，则会继续创建下一个名为relfilenode-2的新文件，并以此类推"><a href="#当表和索引的文件超过1GB时，PG会创建并使用一个名为relfilenode-1的新文件。如果此时新文件也填满了，则会继续创建下一个名为relfilenode-2的新文件，并以此类推" class="headerlink" title="当表和索引的文件超过1GB时，PG会创建并使用一个名为relfilenode.1的新文件。如果此时新文件也填满了，则会继续创建下一个名为relfilenode.2的新文件，并以此类推"></a>当表和索引的文件超过1GB时，PG会创建并使用一个名为<code>relfilenode.1</code>的新文件。如果此时新文件也填满了，则会继续创建下一个名为<code>relfilenode.2</code>的新文件，并以此类推</h5><p>在构建数据库时，可以使用配置选项<code>--with-segsize</code>更改表和索引的最大文件大小</p>
+<p>每个表都有两个与之关联的文件，后缀分别为<code>_fsm</code>和<code>_vm</code>。他们分别存储了表文件每个页面上的空闲空间信息与可见性信息。索引没有可见性映射文件，只有空闲空间映射文件。</p>
+<p>在系统内部，这些文件(主体数据文件、空闲空间映射文件、可见性映射文件等)也被成为相应关系的分支(fork);</p>
+<ul>
+<li><strong>空闲空间映射</strong>：是表/索引数据文件的第一个分支(分支编号为1)</li>
+<li><strong>可见性映射表</strong>：是数据文件的第二个分支(分支编号为2)</li>
+<li><strong>数据文件</strong>：分支编号为0</li>
+<li><strong>不被日志记录的表与索引</strong>：文件分支为3，很少见   init</li>
+</ul>
+<p>每个分支都会被存储为磁盘的一个或多个文件: PG会将过大的分支文件切分成若干个段，以免文件的尺寸超过某些特定文件系统允许的大小，也便于一些归档工具进行并发复制，默认的段大小为1GB。</p>
+<h4 id="表空间的布局"><a href="#表空间的布局" class="headerlink" title="表空间的布局"></a>表空间的布局</h4><p><strong>表空间是基础目录之外的附加数据区域，8.0版本及之后的版本引入此概念</strong></p>
+<h4 id="堆表文件的内部布局"><a href="#堆表文件的内部布局" class="headerlink" title="堆表文件的内部布局"></a>堆表文件的内部布局</h4><p>数据文件(堆表、索引，也包括空闲空间映射和可见性映射)内部被划分为固定长度的页，或者叫区块，大小默认为8192B(8KB).每个文件中的页从0开始按顺序编号，这些数字成为区块号。如果文件已填满，PG就通过在文件末尾追加一个新的空页来增加文件长度。</p>
+<h5 id="表页面的三种数据类型"><a href="#表页面的三种数据类型" class="headerlink" title="表页面的三种数据类型"></a>表页面的三种数据类型</h5><h6 id="堆元组"><a href="#堆元组" class="headerlink" title="堆元组"></a>堆元组</h6><p>即数据记录本身。他们从页面底部开始依序堆叠。</p>
+<h6 id="行指针-项目指针"><a href="#行指针-项目指针" class="headerlink" title="行指针(项目指针)"></a>行指针(项目指针)</h6><p>每个指针占4B，保存着指向堆元组的指针。<br>行指针形成一个简单的数组，扮演了元组索引的角色。每个索引项从1开始一次编号，称为<code>偏移号</code>。当向页面中添加新元组时，一个响应的新行指针也会被放入数组中，并指向新添加的元组。</p>
+<h6 id="首部数据"><a href="#首部数据" class="headerlink" title="首部数据"></a>首部数据</h6><p>页面的起始位置分配了由结构<code>PageHeaderData</code>定义的首部数据。它的大小为24B，包含关于页面的元数据。<br><code>    pd_lsn: 本页面最近一次变更所写入的XLOG记录对应的LSN。它是一个8B无符号整数，与WAL机制相关     pd_checkum: 本页面的校验和值     pd_lower: 指向行指针的末尾     pd_upper: 指向最新堆元组的起始位置     pd_special: 在索引页中会用到该字段，在堆尾页中它指向页尾；在索引页中它指向特殊空间的起始位置，特殊空间是仅由索引使用的特殊数据区域，包含特定的数据，具体内容依索引的类型而定，比如B树，Gist(这是啥？)Gin等等</code></p>
+
     </div>
 
     
