@@ -116,7 +116,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">5</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -150,6 +150,82 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/29/No-module-named-sqlite3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Albert">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Albert Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/10/29/No-module-named-sqlite3/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-10-29 06:51:17" itemprop="dateCreated datePublished" datetime="2021-10-29T06:51:17Z">2021-10-29</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>title: No module named ‘_sqlite3<br>date: 2021-10-29 16:00:00<br>tags: BUG</p>
+<h4 id="如标题提示，问题是因为我们安装的python版本缺少SQLite包，或者缺少-so文件。这个时候我们有两个解决办法。"><a href="#如标题提示，问题是因为我们安装的python版本缺少SQLite包，或者缺少-so文件。这个时候我们有两个解决办法。" class="headerlink" title="如标题提示，问题是因为我们安装的python版本缺少SQLite包，或者缺少.so文件。这个时候我们有两个解决办法。"></a>如标题提示，问题是因为我们安装的python版本缺少SQLite包，或者缺少.so文件。这个时候我们有两个解决办法。</h4><p>&lt;! –more–&gt;<br>一：简单易懂，重装。</p>
+<p>二：安装必要配置并重新编译python</p>
+<ul>
+<li><p>安装<code>sqlite-devel</code>或者<code>libsqlite3-dev</code></p>
+</li>
+<li><p>进入python文件夹，执行<code>./configure --enable-loadable-sqlite-extensions &amp;&amp; make &amp;&amp; sudo make install</code></p>
+<blockquote>
+<p>如果出现权限问题，需要在执行make命令时，赋予root权限</p>
+</blockquote>
+</li>
+</ul>
+<p>按照以上两种任意一个办法运行完毕后，在CMD中执行<code>sqlite3</code>，进行命令行即表示成功，输入<code>.quit</code>可以退出命令行。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
